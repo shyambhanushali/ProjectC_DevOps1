@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  dvwa:
+    image: vulnerables/web-dvwa
+    networks:
+      proxynet:
+        ipv4_address: 172.16.1.2
+  https_proxy:
+    build: ./mod
+    volumes:
+      - ./proxy/httpd.conf:/usr/local/apache2/conf/httpd.conf
+    ports:
+      - 443:8443
+    networks:
+      proxynet:
+        ipv4_address: 172.16.1.3
+  mod_proxy:
+    build: ./mod
+    ports:
+      - 8080:443
+    networks:
+      proxynet:
+        ipv4_address: 172.16.1.4
+
+
+networks:
+  proxynet:
+    ipam:
+      config:
+        - subnet: 172.16.1.0/24
