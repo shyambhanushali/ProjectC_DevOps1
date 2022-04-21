@@ -7,7 +7,7 @@ services:
       proxynet:
         ipv4_address: 172.16.1.2
   https_proxy:
-    build: ./mod
+    build: ./proxy
     volumes:
       - ./proxy/httpd.conf:/usr/local/apache2/conf/httpd.conf
     ports:
